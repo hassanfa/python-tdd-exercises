@@ -29,7 +29,10 @@ def is_english_vowel(c):
     Returns True if c is an english vowel
     and False otherwise.
     """
-    return None
+    cVowel=False
+    if c.lower() in "aeiyuo": 
+       cVowel=True
+    return cVowel
 
 
 def test_is_english_vowel():
@@ -56,7 +59,11 @@ def count_num_vowels(s):
     """
     Returns the number of vowels in a string s.
     """
-    return None
+    out=0
+    for c in s:
+      if c.lower() in "aeiuyo":
+        out+=1
+    return out
 
 
 def test_count_num_vowels():
@@ -78,7 +85,13 @@ def histogram(l):
     """
     Converts a list of integers into a simple string histogram.
     """
-    return None
+    out=""
+    for n in list(range(len(l))):
+      for m in list(range(l[n])):
+        out+="#"
+      if n<len(l)-1:
+        out+="\n"
+    return out
 
 
 def test_histogram():
@@ -92,7 +105,19 @@ def get_word_lengths(s):
     Returns a list of integers representing
     the word lengths in string s.
     """
-    return None
+    wordIndex=0
+    out=[]
+    for c in list(range(len(s))):
+      if s[c]==" ":
+        if wordIndex==0:
+          out.append(c-wordIndex)
+          wordIndex=c
+        else:
+          out.append(c-wordIndex-1)
+          wordIndex=c
+    if wordIndex<=c:
+      out.append(len(s)-wordIndex-1)
+    return out
 
 
 def test_get_word_lengths():
@@ -107,7 +132,23 @@ def find_longest_word(s):
     Returns the longest word in string s.
     In case there are several, return the first.
     """
-    return None
+    wordIndex=0
+    longestWord=""
+    out=[]
+    for c in list(range(len(s))):
+      if s[c]==" ":
+        if wordIndex==0:
+          out.append(s[wordIndex:c])
+          wordIndex=c
+        else:
+          out.append(s[wordIndex+1:c])
+          wordIndex=c
+    if wordIndex<=c:
+      out.append(s[wordIndex+1:len(s)])
+    for w in out:
+      if len(w)>len(longestWord):
+        longestWord=w
+    return longestWord
 
 
 def test_find_longest_word():
@@ -124,7 +165,11 @@ def validate_dna(s):
     Return True if the DNA string only contains characters
     a, c, t, or g (lower or uppercase). False otherwise.
     """
-    return None
+    out=True
+    for c in s:
+      if c.lower() not in 'ctga':
+        out=False
+    return out
 
 
 def test_validate_dna():
@@ -140,7 +185,12 @@ def base_pair(c):
     of the base pair. If the base is not recognized,
     return 'unknown'.
     """
-    return None
+    out='unknown'
+    refbp={"a":"t","t":"a","c":"g","g":"c"}
+    if c.lower() in list(refbp.keys()):
+      if c.lower() == refbp[refbp[c.lower()]]:
+        out=refbp[c.lower()]
+    return out
 
 
 def test_base_pair():
@@ -163,7 +213,13 @@ def transcribe_dna_to_rna(s):
     Return string s with each letter T replaced by U.
     Result is always uppercase.
     """
-    return None
+    out=""
+    for c in s:
+      if c.upper()=="T":
+        out+="U"
+      else:
+        out+=c.upper()
+    return out
 
 
 def test_transcribe_dna_to_rna():
@@ -178,7 +234,14 @@ def get_complement(s):
     Return the DNA complement in uppercase
     (A -> T, T-> A, C -> G, G-> C).
     """
-    return None
+    out=""
+    refbp={"a":"t","t":"a","c":"g","g":"c"}
+    for c in s:
+      if c.lower() in list(refbp.keys()):
+        if c.lower() == refbp[refbp[c.lower()]]:
+          out+=refbp[c.lower()]
+    out=out.upper()
+    return out
 
 
 def test_get_complement():

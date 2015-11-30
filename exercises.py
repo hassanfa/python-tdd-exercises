@@ -16,7 +16,7 @@ def reverse_string(s):
     """
     Reverses order of characters in string s.
     """
-    return l[::-1]
+    return s[::-1]
 
 def test_reverse_string():
     assert reverse_string("foobar") == "raboof"

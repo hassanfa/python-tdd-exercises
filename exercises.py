@@ -256,7 +256,15 @@ def get_reverse_complement(s):
     Return the reverse complement of string s
     (complement reversed in order).
     """
-    return None
+    out=""
+    refbp={"a":"t","t":"a","c":"g","g":"c"}
+    for c in s:
+      if c.lower() in list(refbp.keys()):
+        if c.lower() == refbp[refbp[c.lower()]]:
+          out+=refbp[c.lower()]
+    out=out.upper()
+    out=out[::-1]
+    return out
 
 
 def test_get_reverse_complement():
@@ -270,8 +278,8 @@ def remove_substring(substring, string):
     """
     Returns string with all occurrences of substring removed.
     """
-    return None
-
+    out = string.replace(substring,"")
+    return out
 
 def test_remove_substring():
     assert remove_substring('GAA', 'CCGGAAGAGCTTACTTAG') == 'CCGGAGCTTACTTAG'
@@ -288,7 +296,11 @@ def get_position_indices(triplet, dna):
     in a DNA sequence. We start counting from 0
     and jump by 3 characters from one position to the next.
     """
-    return None
+    out=[]
+    for n in range(0,len(dna),3):
+      if dna[n:n+3]==triplet:
+        out.append(n//3)
+    return out
 
 
 def test_get_position_indices():
@@ -307,7 +319,24 @@ def get_3mer_usage_chart(s):
     The list is alphabetically sorted by the name
     of the 3-mer.
     """
-    return None
+    triplet=[]
+    for n in list(range(len(s))):
+      if n<=len(s)-3:
+        triplet.append(s[n:n+3])
+    triplet = list(set(triplet))
+    triplet = sorted(triplet)
+    
+    tripcountOut=[]
+    for t in triplet:
+      tmpS = s
+      tmpS = tmpS.replace(t,'X')
+      tripcount=0
+      for c in tmpS:
+        if c=='X':
+          tripcount+=1
+      tripcountOut.append(tripcount)
+    out=list(zip(triplet,tripcountOut))
+    return out
 
 
 def test_get_3mer_usage_chart():
@@ -338,7 +367,16 @@ def read_column(file_name, column_number):
     Reads column column_number from file file_name
     and returns the values as floats in a list.
     """
-    return None
+    import csv
+    fieldHandle=open(file_name, 'r')
+    out=[]
+    cname={0:0,1:3,2:5}
+    for line in fieldHandle:
+      fields=line.split()
+      if len(fields)!=0:
+        out.append(float(fields[column_number-1]))
+    fieldHandle.close()
+    return out
 
 
 def test_read_column():

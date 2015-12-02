@@ -370,7 +370,6 @@ def read_column(file_name, column_number):
     import csv
     fieldHandle=open(file_name, 'r')
     out=[]
-    cname={0:0,1:3,2:5}
     for line in fieldHandle:
       fields=line.split()
       if len(fields)!=0:
@@ -415,7 +414,31 @@ def character_statistics(file_name):
     Use the isalpha() method to figure out
     whether the character is in the alphabet.
     """
-    return None
+    import csv
+    import string
+    import operator
+    fieldHandle=open(file_name, 'r')
+    out=[]
+    for line in fieldHandle:
+      fields=line.split()
+      out+=fields
+    fieldHandle.close()
+    charCount=[]
+    out=''.join(out)
+    out = out.lower()
+    refString = string.ascii_lowercase
+    print(refString)
+    for c in list(refString):
+       charCount.append(out.count(c))
+    print(charCount)
+    index, value = max(enumerate(charCount), key=operator.itemgetter(1))
+    firstMax= refString[index]
+    index, value = min(enumerate(charCount), key=operator.itemgetter(1))
+    secondMax= refString[index]
+    refString2nd = refString[:index] + refString[index+1:]
+    #del charCount[index]
+    #secondMax= refString2nd[index]
+    return (firstMax,secondMax)
 
 
 def test_character_statistics():
@@ -493,4 +516,5 @@ def pythagorean_triples(n):
 # ------------------------------------------------------------------------------
 
 def test_pythagorean_triples():
-    pass  # so far we do not test anything, check also test coverage
+  assert pythagorean_triples(20) == [(3, 4, 5), (6, 8, 10), (5, 12, 13), (9, 12, 15), (8, 15, 17), (12, 16, 20)]
+  pass  # so far we do not test anything, check also test coverage
